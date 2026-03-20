@@ -70,7 +70,7 @@ class FoodDatasetLoader:
         )
     
     def _load_data(self):
-        """Load the CSV file into memory."""
+        """Load the CSV file into memory with optimized parameters."""
         if not self.csv_path or not os.path.exists(self.csv_path):
             raise FileNotFoundError(
                 f"Dataset not found: {self.csv_path}\n"
@@ -78,7 +78,14 @@ class FoodDatasetLoader:
             )
         
         print(f"Loading dataset from: {self.csv_path}")
-        self.df = pd.read_csv(self.csv_path)
+        
+        # Optimize CSV loading for large files
+        self.df = pd.read_csv(
+            self.csv_path,
+            engine='python',
+            encoding='utf-8',
+            on_bad_lines='skip'
+        )
         
         # Convert product names to lowercase for easier searching
         self.df['product_name_lower'] = self.df['product_name'].str.lower()

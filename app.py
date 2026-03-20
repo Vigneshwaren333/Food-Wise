@@ -157,81 +157,75 @@ st.markdown("""
         opacity: 1 !important;
     }
     
-    /* Dropdown/Select box - CRITICAL FIX */
-    select {
-        background-color: #FFFFFF !important;
-        color: #1a1a1a !important;
-        border: 1px solid var(--card-border) !important;
-        border-radius: 6px !important;
-        padding: 8px !important;
-    }
-    
-    /* Dark mode select */
-    @media (prefers-color-scheme: dark) {
-        select {
-            background-color: #0D1117 !important;
-            color: #E6EDF3 !important;
-        }
-    }
-    
-    /* Dropdown options - EXPLICIT DARK TEXT ON LIGHT BACKGROUND */
-    option {
-        background-color: #FFFFFF !important;
-        color: #1a1a1a !important;
-        padding: 8px !important;
-    }
-    
-    /* Dark mode options */
-    @media (prefers-color-scheme: dark) {
-        option {
-            background-color: #1C2128 !important;
-            color: #E6EDF3 !important;
-        }
-    }
-    
-    /* Option hover/focus - GREEN WITH WHITE TEXT */
-    option:hover {
-        background-color: var(--accent-color) !important;
-        color: white !important;
-    }
-    
-    /* Option checked - GREEN WITH WHITE TEXT */
-    option:checked {
-        background-color: var(--accent-color) !important;
-        color: white !important;
-    }
-    
-    /* Selectbox focus */
-    select:focus {
-        outline: 2px solid var(--accent-color) !important;
-        outline-offset: 1px !important;
-    }
-    
-    /* Streamlit Selectbox styling */
+    /* Streamlit Selectbox - Dark background with white text */
     [data-testid="stSelectbox"] {
-        color: #1a1a1a !important;
+        background-color: #0D1117 !important;
     }
     
-    @media (prefers-color-scheme: dark) {
-        [data-testid="stSelectbox"] {
-            color: #E6EDF3 !important;
-        }
+    /* Selectbox button/trigger */
+    [data-testid="stSelectbox"] button {
+        background-color: #0D1117 !important;
+        color: #FFFFFF !important;
+        border: 1px solid #30363D !important;
+        font-weight: 500 !important;
     }
     
-    [data-testid="stSelectbox"] select,
-    [data-testid="stSelectbox"] [role="listbox"],
+    /* Selectbox button when hovered */
+    [data-testid="stSelectbox"] button:hover {
+        background-color: #1C2128 !important;
+        border-color: #444C56 !important;
+    }
+    
+    /* Selectbox button when focused */
+    [data-testid="stSelectbox"] button:focus {
+        background-color: #1C2128 !important;
+        border-color: #10A981 !important;
+    }
+    
+    /* Dropdown menu overlay - appears outside stSelectbox */
+    [data-testid="stSelectbox"] [role="listbox"] {
+        background-color: #0D1117 !important;
+        color: #FFFFFF !important;
+        border: 1px solid #30363D !important;
+        border-radius: 6px !important;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5) !important;
+    }
+    
+    /* Individual dropdown options */
     [data-testid="stSelectbox"] [role="option"] {
-        background-color: #FFFFFF !important;
-        color: #1a1a1a !important;
+        background-color: #0D1117 !important;
+        color: #FFFFFF !important;
+        padding: 10px 12px !important;
+        font-weight: 500 !important;
     }
     
-    @media (prefers-color-scheme: dark) {
-        [data-testid="stSelectbox"] select,
-        [data-testid="stSelectbox"] [role="listbox"],
-        [data-testid="stSelectbox"] [role="option"] {
-            background-color: #0D1117 !important;
-            color: #E6EDF3 !important;
-        }
+    /* Option hover state */
+    [data-testid="stSelectbox"] [role="option"]:hover {
+        background-color: #10A981 !important;
+        color: white !important;
+    }
+    
+    /* Option selected/active state */
+    [data-testid="stSelectbox"] [role="option"][aria-selected="true"] {
+        background-color: #10A981 !important;
+        color: white !important;
+    }
+    
+    /* Ul element in selectbox */
+    [data-testid="stSelectbox"] ul {
+        background-color: #0D1117 !important;
+    }
+    
+    /* Li elements in selectbox */
+    [data-testid="stSelectbox"] li {
+        background-color: #0D1117 !important;
+        color: #FFFFFF !important;
+    }
+    
+    /* Li hover */
+    [data-testid="stSelectbox"] li:hover {
+        background-color: #10A981 !important;
+        color: white !important;
     }
     
     /* Buttons */
@@ -606,7 +600,13 @@ def main():
         )
     
     with col2:
-        search_type = st.selectbox("Search by", ["Product Name", "Ingredient"], label_visibility="collapsed")
+        search_type = st.selectbox(
+            "Search by", 
+            ["Product Name", "Ingredient"], 
+            index=0,
+            label_visibility="collapsed",
+            help="Search by product name or ingredient"
+        )
     
     # Search button
     if st.button("🔍 Search", use_container_width=True):
