@@ -36,6 +36,7 @@ st.markdown("""
         --card-border: #E0E0E0;
         --hover-bg: #F8F9FA;
         --accent-color: #10A981;
+        --text-muted: #666666;
     }
     
     /* Dark mode variables */
@@ -44,24 +45,48 @@ st.markdown("""
             --bg-primary: #0E1117;
             --bg-secondary: #161B22;
             --text-primary: #E6EDF3;
-            --text-secondary: #8B949E;
+            --text-secondary: #C9D1D9;
             --border-color: #30363D;
             --card-border: #444C56;
             --hover-bg: #161B22;
             --accent-color: #10A981;
+            --text-muted: #B1BCC7;
         }
     }
     
     /* Main app styling */
     .stApp {
         background-color: var(--bg-primary);
-        color: var(--text-primary);
     }
     
     /* Sidebar styling */
     [data-testid="stSidebar"] {
         background-color: var(--bg-primary);
         border-right: 1px solid var(--border-color);
+    }
+    
+    /* Sidebar text - ensure visibility */
+    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] {
+        color: var(--text-primary) !important;
+    }
+    
+    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
+    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] span,
+    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] div {
+        color: var(--text-primary) !important;
+    }
+    
+    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h1,
+    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h2,
+    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h3 {
+        color: var(--text-primary) !important;
+        font-weight: 600;
+    }
+    
+    /* Sidebar captions and small text */
+    [data-testid="stSidebar"] small,
+    [data-testid="stSidebar"] [class*="small"] {
+        color: var(--text-muted) !important;
     }
     
     /* Card containers */
@@ -80,14 +105,24 @@ st.markdown("""
         border: 1px solid var(--card-border);
     }
     
-    /* Text elements */
+    /* Main content text elements */
+    [data-testid="stMarkdownContainer"] {
+        color: var(--text-primary);
+    }
+    
     [data-testid="stMarkdownContainer"] p,
     [data-testid="stMarkdownContainer"] h1,
     [data-testid="stMarkdownContainer"] h2,
     [data-testid="stMarkdownContainer"] h3,
     [data-testid="stMarkdownContainer"] h4,
     [data-testid="stMarkdownContainer"] h5,
-    [data-testid="stMarkdownContainer"] h6 {
+    [data-testid="stMarkdownContainer"] h6,
+    [data-testid="stMarkdownContainer"] li {
+        color: var(--text-primary) !important;
+    }
+    
+    /* All text should inherit primary color */
+    body, p, span, div, li, h1, h2, h3, h4, h5, h6 {
         color: var(--text-primary);
     }
     
@@ -136,6 +171,7 @@ st.markdown("""
         background-color: var(--bg-secondary) !important;
         border-radius: 8px !important;
         border: 1px solid var(--card-border) !important;
+        color: var(--text-primary) !important;
     }
     
     /* Dividers */
@@ -192,6 +228,13 @@ st.markdown("""
     
     td {
         border-color: var(--card-border);
+    }
+    
+    /* Captions and muted text */
+    [class*="caption"], 
+    [class*="small-text"],
+    .stCaption {
+        color: var(--text-muted) !important;
     }
 </style>
 """, unsafe_allow_html=True)
