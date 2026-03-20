@@ -1,63 +1,84 @@
-# Vercel Deployment for Streamlit
+# 🍎 Food Nutrition Intelligence - Streamlit Deployment
 
-**⚠️ Important Note:** Vercel does not natively support Streamlit apps. For deployment, consider:
+A RAG-based food nutrition analysis app powered by Groq LLM and OpenFoodFacts data.
 
-## Option 1: Streamlit Community Cloud (Recommended)
-- Deploy to [Streamlit Cloud](https://streamlit.io/cloud) for free
-- Simply connect your GitHub repository
+## 🚀 Quick Deploy to Streamlit Cloud
 
-## Option 2: HuggingFace Spaces (Free)
-- Create a new Space at huggingface.co/spaces
-- Upload your files there
+**Status**: ✅ Ready for deployment! The `foods_cleaned.csv` is tracked with Git LFS and already in the repo.
 
-## Option 3: Railway/Render (Alternative)
-- These platforms support Streamlit directly
+1. Go to https://share.streamlit.io
+2. Click "New app" → "From existing repo"
+3. Enter: `https://github.com/Vigneshwaren333/Food-Wise.git`
+4. Select branch: `main`
+5. File path: `app.py`
+6. Click Deploy!
 
-## Files in this folder:
-- app.py - Main Streamlit application
-- requirements.txt - Python dependencies
-- .env.example - Environment variables template
-- DEPLOYMENT_GUIDE.md - **Detailed deployment instructions (READ THIS!)**
+**That's it!** Streamlit Cloud will handle everything, including downloading the LFS-tracked dataset.
 
-## Local Setup:
+## 📁 Key Files:
+- **app.py** - Main Streamlit application
+- **foods_cleaned.csv** - Dataset (tracked with Git LFS, 126 MB)
+- **requirements.txt** - Python dependencies
+- **data_loader.py** - Dataset loading with smart path resolution
+- **DEPLOYMENT_GUIDE.md** - Detailed deployment troubleshooting
+
+## 💻 Local Development Setup
+
 ```bash
-# Install dependencies
+# 1. Clone and navigate to project
+git clone https://github.com/Vigneshwaren333/Food-Wise.git
+cd Food-Wise/Deployment_Version
+
+# 2. Install dependencies
 pip install -r requirements.txt
 
-# Generate the dataset (if you have raw OpenFoodFacts data)
-python clean_data.py
+# 3. Set up environment variables
+cp .env.example .env
+# Add your Groq API key to .env
 
-# Run the app
+# 4. Run the app
 streamlit run app.py
 ```
 
-## ⚠️ IMPORTANT: Dataset Setup for Deployment
+## 📋 Setup Details:
 
-**This app requires the `foods_cleaned.csv` file to function.**
+### Dataset (foods_cleaned.csv)
+- ✅ Already included in the repository with Git LFS
+- Size: 126 MB of food nutrition data
+- Automatically loaded from the repo on deployment
 
-### Before Deploying:
-You must prepare the `foods_cleaned.csv` file. Choose one option:
+### Environment Variables (.env)
+```bash
+GROQ_API_KEY=your_groq_api_key_here  # Get free key from https://console.groq.com/
+GROQ_MODEL=llama-3.3-70b-versatile   # Latest Groq model
+CSV_PATH=foods_cleaned.csv            # Optional (auto-detected if not set)
+```
 
-1. **Generate it locally** (if you have raw OpenFoodFacts data):
-   ```bash
-   python clean_data.py
-   ```
+### Alternative Platforms
+If you prefer other deployment options:
+- **HuggingFace Spaces**: Upload files directly at huggingface.co/spaces
+- **Railway/Render**: Docker-based deployment with Streamlit support
+- **Local Server**: `streamlit run app.py` on your machine
 
-2. **Use Git LFS** (for GitHub deployment):
-   ```bash
-   git lfs install
-   git lfs track "foods_cleaned.csv"
-   git add .gitattributes foods_cleaned.csv
-   git push
-   ```
+## 🆘 Troubleshooting
 
-3. **Upload to cloud storage** and use Streamlit Secrets to auto-download
+### "Dataset not found" Error
+- **On Streamlit Cloud**: Check app logs in the menu → Manage App → Logs
+- **Locally**: Ensure `foods_cleaned.csv` exists in the same directory as `app.py`
+- **Custom path**: Set `CSV_PATH` environment variable
+- See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for detailed solutions
 
-👉 **See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for complete deployment instructions.**
+### Groq API Issues
+- Verify your API key in `.env` (free at https://console.groq.com/)
+- Check API rate limits in Groq console
+- The app has a fallback rule-based analyzer if API fails
 
-## Troubleshooting
+### First Deployment Taking Long?
+- First deployment with LFS can take 2-3 minutes
+- Subsequent deployments are faster
+- Check Streamlit Cloud deployment logs for progress
 
-**Error: "Dataset not found: foods_cleaned.csv"**
-- Ensure `foods_cleaned.csv` is in the same directory as `app.py`
-- Or set the `CSV_PATH` environment variable to point to it
-- See DEPLOYMENT_GUIDE.md for detailed troubleshooting
+## 📖 More Information
+- See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for advanced deployment options
+- For dataset generation from raw data: `python clean_data.py`
+- For API-specific questions: https://console.groq.com/docs
