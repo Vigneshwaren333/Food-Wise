@@ -23,40 +23,175 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for clean, minimal look - works in both light and dark mode
+# Custom CSS for clean, modern look - works in both light and dark mode
 st.markdown("""
 <style>
-    /* Metric cards */
+    /* Root variables for light mode */
+    :root {
+        --bg-primary: #FFFFFF;
+        --bg-secondary: #F0F2F6;
+        --text-primary: #262730;
+        --text-secondary: #8B8D91;
+        --border-color: #ECECEC;
+        --card-border: #E0E0E0;
+        --hover-bg: #F8F9FA;
+        --accent-color: #10A981;
+    }
+    
+    /* Dark mode variables */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg-primary: #0E1117;
+            --bg-secondary: #161B22;
+            --text-primary: #E6EDF3;
+            --text-secondary: #8B949E;
+            --border-color: #30363D;
+            --card-border: #444C56;
+            --hover-bg: #161B22;
+            --accent-color: #10A981;
+        }
+    }
+    
+    /* Main app styling */
+    .stApp {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+    }
+    
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background-color: var(--bg-primary);
+        border-right: 1px solid var(--border-color);
+    }
+    
+    /* Card containers */
+    [data-testid="stMetric"] {
+        background-color: var(--bg-secondary);
+        padding: 16px;
+        border-radius: 10px;
+        border: 1px solid var(--card-border);
+    }
+    
     .metric-card {
-        background: transparent;
+        background-color: var(--bg-secondary);
         padding: 16px;
         border-radius: 10px;
         text-align: center;
-        border: 1px solid #E5E5E5;
+        border: 1px solid var(--card-border);
     }
     
-    @media (prefers-color-scheme: dark) {
-        .metric-card {
-            border-color: #333;
-        }
-        .stApp {
-            background-color: #0E1117;
-        }
+    /* Text elements */
+    [data-testid="stMarkdownContainer"] p,
+    [data-testid="stMarkdownContainer"] h1,
+    [data-testid="stMarkdownContainer"] h2,
+    [data-testid="stMarkdownContainer"] h3,
+    [data-testid="stMarkdownContainer"] h4,
+    [data-testid="stMarkdownContainer"] h5,
+    [data-testid="stMarkdownContainer"] h6 {
+        color: var(--text-primary);
     }
     
-    /* Section headers */
+    /* Headers */
     .section-header {
         font-size: 12px;
         font-weight: 600;
-        color: #888;
+        color: var(--text-secondary);
         text-transform: uppercase;
         letter-spacing: 0.5px;
         margin-bottom: 8px;
     }
     
-    /* Remove expanders border */
+    /* Input elements */
+    [data-testid="stTextInput"] input,
+    [data-testid="stSelectbox"] select,
+    [data-testid="stNumberInput"] input {
+        background-color: var(--bg-secondary) !important;
+        color: var(--text-primary) !important;
+        border: 1px solid var(--card-border) !important;
+        border-radius: 6px !important;
+    }
+    
+    /* Buttons */
+    [data-testid="stButton"] > button {
+        background-color: var(--accent-color);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+    
+    [data-testid="stButton"] > button:hover {
+        background-color: #0C8965;
+        opacity: 0.9;
+    }
+    
+    /* Expanders */
+    [data-testid="stExpander"] {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+    }
+    
     .streamlit-expanderHeader {
+        background-color: var(--bg-secondary) !important;
         border-radius: 8px !important;
+        border: 1px solid var(--card-border) !important;
+    }
+    
+    /* Dividers */
+    hr {
+        background-color: var(--border-color);
+        border: none;
+        height: 1px;
+    }
+    
+    /* Columns and containers */
+    [data-testid="column"] {
+        background-color: transparent;
+    }
+    
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: var(--card-border);
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--text-secondary);
+    }
+    
+    /* Code blocks */
+    code {
+        background-color: var(--bg-secondary);
+        color: var(--text-primary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+    
+    /* Tables */
+    table {
+        background-color: var(--bg-secondary);
+        color: var(--text-primary);
+    }
+    
+    th {
+        background-color: var(--bg-secondary);
+        color: var(--text-primary);
+        border-color: var(--card-border);
+    }
+    
+    td {
+        border-color: var(--card-border);
     }
 </style>
 """, unsafe_allow_html=True)
