@@ -30,28 +30,30 @@ st.markdown("""
     :root {
         --bg-primary: #FFFFFF;
         --bg-secondary: #F0F2F6;
-        --text-primary: #262730;
-        --text-secondary: #555555;
+        --text-primary: #1a1a1a;
+        --text-secondary: #333333;
+        --text-light: #1a1a1a;
         --border-color: #ECECEC;
         --card-border: #E0E0E0;
-        --hover-bg: #F8F9FA;
+        --hover-bg: #E8E8E8;
         --accent-color: #10A981;
-        --text-muted: #888888;
+        --text-muted: #555555;
         --input-bg: #FFFFFF;
-        --input-text: #262730;
-        --placeholder-text: #999999;
+        --input-text: #1a1a1a;
+        --placeholder-text: #888888;
     }
     
     /* Dark mode variables */
     @media (prefers-color-scheme: dark) {
         :root {
             --bg-primary: #0E1117;
-            --bg-secondary: #161B22;
+            --bg-secondary: #1C2128;
             --text-primary: #E6EDF3;
             --text-secondary: #D0D4D9;
+            --text-light: #F0F6FC;
             --border-color: #30363D;
             --card-border: #444C56;
-            --hover-bg: #161B22;
+            --hover-bg: #262D35;
             --accent-color: #10A981;
             --text-muted: #B1BCC7;
             --input-bg: #0D1117;
@@ -60,39 +62,56 @@ st.markdown("""
         }
     }
     
+    /* UNIVERSAL RULE: Light text on dark backgrounds, dark text on light backgrounds */
+    
     /* Main app styling */
     .stApp {
         background-color: var(--bg-primary);
+        color: var(--text-primary);
     }
     
     /* Sidebar styling */
     [data-testid="stSidebar"] {
         background-color: var(--bg-primary);
         border-right: 1px solid var(--border-color);
+        color: var(--text-primary);
     }
     
-    /* Sidebar text - ensure visibility */
-    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] {
+    /* Force all text to be visible */
+    * {
+        color: inherit;
+    }
+    
+    /* Sidebar text - LIGHT on DARK / DARK on LIGHT */
+    [data-testid="stSidebar"] {
         color: var(--text-primary) !important;
     }
     
-    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
-    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] span,
-    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] div {
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] div,
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] h4,
+    [data-testid="stSidebar"] h5,
+    [data-testid="stSidebar"] h6 {
         color: var(--text-primary) !important;
     }
     
-    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h1,
-    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h2,
-    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] h3 {
+    /* Main content text */
+    [data-testid="stMarkdownContainer"],
+    [data-testid="stMarkdownContainer"] p,
+    [data-testid="stMarkdownContainer"] h1,
+    [data-testid="stMarkdownContainer"] h2,
+    [data-testid="stMarkdownContainer"] h3,
+    [data-testid="stMarkdownContainer"] h4,
+    [data-testid="stMarkdownContainer"] h5,
+    [data-testid="stMarkdownContainer"] h6,
+    [data-testid="stMarkdownContainer"] span,
+    [data-testid="stMarkdownContainer"] div,
+    [data-testid="stMarkdownContainer"] li {
         color: var(--text-primary) !important;
-        font-weight: 600;
-    }
-    
-    /* Sidebar captions and small text */
-    [data-testid="stSidebar"] small,
-    [data-testid="stSidebar"] [class*="small"] {
-        color: var(--text-muted) !important;
     }
     
     /* Card containers */
@@ -101,7 +120,11 @@ st.markdown("""
         padding: 16px;
         border-radius: 10px;
         border: 1px solid var(--card-border);
-        color: var(--text-primary);
+    }
+    
+    [data-testid="stMetric"] label,
+    [data-testid="stMetric"] div {
+        color: var(--text-primary) !important;
     }
     
     .metric-card {
@@ -110,163 +133,127 @@ st.markdown("""
         border-radius: 10px;
         text-align: center;
         border: 1px solid var(--card-border);
-        color: var(--text-primary);
-    }
-    
-    /* Main content text elements */
-    [data-testid="stMarkdownContainer"] {
-        color: var(--text-primary);
-    }
-    
-    [data-testid="stMarkdownContainer"] p,
-    [data-testid="stMarkdownContainer"] h1,
-    [data-testid="stMarkdownContainer"] h2,
-    [data-testid="stMarkdownContainer"] h3,
-    [data-testid="stMarkdownContainer"] h4,
-    [data-testid="stMarkdownContainer"] h5,
-    [data-testid="stMarkdownContainer"] h6,
-    [data-testid="stMarkdownContainer"] li {
         color: var(--text-primary) !important;
     }
     
-    /* All text should inherit primary color */
-    body, p, span, div, li, h1, h2, h3, h4, h5, h6 {
-        color: var(--text-primary);
-    }
-    
-    /* Headers */
-    .section-header {
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--text-secondary);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 8px;
-    }
-    
-    /* Input elements - improved styling */
-    [data-testid="stTextInput"] input,
-    [data-testid="stSelectbox"] select,
-    [data-testid="stNumberInput"] input {
+    /* Input elements */
+    input,
+    select,
+    textarea {
         background-color: var(--input-bg) !important;
         color: var(--input-text) !important;
         border: 1px solid var(--card-border) !important;
         border-radius: 6px !important;
     }
     
-    /* Placeholder text styling */
-    [data-testid="stTextInput"] input::placeholder,
-    [data-testid="stSelectbox"] select::placeholder,
-    [data-testid="stNumberInput"] input::placeholder,
-    input::placeholder,
-    textarea::placeholder {
+    /* Placeholder text - good visibility */
+    ::placeholder {
         color: var(--placeholder-text) !important;
         opacity: 1 !important;
     }
     
-    /* Firefox specific placeholder styling */
-    input::-moz-placeholder,
-    textarea::-moz-placeholder {
+    ::-moz-placeholder {
         color: var(--placeholder-text) !important;
         opacity: 1 !important;
     }
     
-    /* Select/Dropdown options - base styling */
+    /* Dropdown options - HIGH CONTRAST */
     option {
-        background-color: var(--bg-secondary);
-        color: var(--text-primary);
+        background-color: var(--bg-secondary) !important;
+        color: var(--text-primary) !important;
     }
     
-    /* Select dropdown when focused or expanded */
-    select:focus {
-        background-color: var(--input-bg) !important;
-        color: var(--input-text) !important;
-        outline: 2px solid var(--accent-color) !important;
+    option:hover {
+        background-color: var(--accent-color) !important;
+        color: white !important;
     }
     
-    /* Dropdown option hover - ensure text is visible */
-    option:hover,
     option:checked {
         background-color: var(--accent-color) !important;
         color: white !important;
     }
     
-    /* Selected option text in select box */
-    select option:checked:not(:hover) {
-        background: linear-gradient(to right, var(--accent-color), var(--accent-color));
-        color: white;
-    }
-    
     /* Buttons */
     [data-testid="stButton"] > button {
-        background-color: var(--accent-color);
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-weight: 500;
+        background-color: var(--accent-color) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 6px !important;
+        font-weight: 500 !important;
     }
     
     [data-testid="stButton"] > button:hover {
-        background-color: #0C8965;
-        opacity: 0.9;
+        background-color: #0C8965 !important;
+        opacity: 0.9 !important;
     }
     
-    /* Expanders - ensure proper contrast */
+    /* EXPANDERS - CRITICAL FIX */
     [data-testid="stExpander"] {
         background-color: var(--bg-secondary);
         border: 1px solid var(--card-border);
         border-radius: 8px;
-        color: var(--text-primary);
     }
     
+    /* Expander HEADER */
     .streamlit-expanderHeader {
         background-color: var(--bg-secondary) !important;
         border-radius: 8px !important;
         border: 1px solid var(--card-border) !important;
-        color: var(--text-primary) !important;
         padding: 12px !important;
-        transition: background-color 0.2s ease;
     }
     
-    /* Expander header HOVER state - maintain readability */
-    .streamlit-expanderHeader:hover {
-        background-color: var(--hover-bg) !important;
-        border-color: var(--text-secondary) !important;
+    .streamlit-expanderHeader * {
+        color: var(--text-primary) !important;
     }
     
-    /* Expander header text and icon */
     .streamlit-expanderHeader p,
     .streamlit-expanderHeader span,
     .streamlit-expanderHeader div {
         color: var(--text-primary) !important;
     }
     
-    /* Expander header text on hover must stay visible */
-    .streamlit-expanderHeader:hover p,
-    .streamlit-expanderHeader:hover span,
-    .streamlit-expanderHeader:hover div {
+    .streamlit-expanderHeader svg {
+        fill: var(--text-primary) !important;
+        stroke: var(--text-primary) !important;
+    }
+    
+    /* Expander header on hover */
+    .streamlit-expanderHeader:hover {
+        background-color: var(--hover-bg) !important;
+    }
+    
+    .streamlit-expanderHeader:hover * {
         color: var(--text-primary) !important;
     }
     
-    /* Expander header icons */
-    [data-testid="stExpander"] svg {
-        fill: var(--text-primary) !important;
-        stroke: var(--text-primary) !important;
+    /* Expander CONTENT - ENSURE READABILITY */
+    [data-testid="stExpander"] > div:nth-child(2) {
+        background-color: var(--bg-secondary) !important;
     }
     
-    [data-testid="stExpander"]:hover svg {
-        fill: var(--text-primary) !important;
-        stroke: var(--text-primary) !important;
-    }
-    
-    /* Expander content */
     [data-testid="stExpander"] [data-testid="stMarkdownContainer"] {
         color: var(--text-primary) !important;
         background-color: transparent !important;
     }
     
-    [data-testid="stExpander"] [data-testid="stMarkdownContainer"] p,
-    [data-testid="stExpander"] [data-testid="stMarkdownContainer"] span {
+    [data-testid="stExpander"] [data-testid="stMarkdownContainer"] *,
+    [data-testid="stExpander"] p,
+    [data-testid="stExpander"] span,
+    [data-testid="stExpander"] div,
+    [data-testid="stExpander"] h1,
+    [data-testid="stExpander"] h2,
+    [data-testid="stExpander"] h3,
+    [data-testid="stExpander"] h4,
+    [data-testid="stExpander"] h5,
+    [data-testid="stExpander"] h6,
+    [data-testid="stExpander"] li,
+    [data-testid="stExpander"] a {
+        color: var(--text-primary) !important;
+        background-color: transparent !important;
+    }
+    
+    /* Force text visibility in all elements */
+    p, span, div, h1, h2, h3, h4, h5, h6, li, label, a, button, td, th {
         color: var(--text-primary) !important;
     }
     
@@ -303,8 +290,8 @@ st.markdown("""
     
     /* Code blocks */
     code {
-        background-color: var(--bg-secondary);
-        color: var(--text-primary);
+        background-color: var(--bg-secondary) !important;
+        color: var(--text-primary) !important;
         padding: 2px 6px;
         border-radius: 4px;
         font-size: 0.9em;
@@ -316,6 +303,11 @@ st.markdown("""
         color: var(--text-primary);
     }
     
+    thead {
+        background-color: var(--bg-secondary);
+        color: var(--text-primary);
+    }
+    
     th {
         background-color: var(--bg-secondary);
         color: var(--text-primary);
@@ -323,15 +315,14 @@ st.markdown("""
     }
     
     td {
-        border-color: var(--card-border);
+        background-color: transparent;
         color: var(--text-primary);
+        border-color: var(--card-border);
     }
     
-    /* Captions and muted text */
-    [class*="caption"], 
-    [class*="small-text"],
-    .stCaption {
-        color: var(--text-muted) !important;
+    /* Captions and labels */
+    caption, label, .stCaption {
+        color: var(--text-primary) !important;
     }
 </style>
 """, unsafe_allow_html=True)
