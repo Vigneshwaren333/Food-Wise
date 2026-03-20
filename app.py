@@ -171,6 +171,32 @@ st.markdown("""
         opacity: 1 !important;
     }
     
+    /* Select/Dropdown options - base styling */
+    option {
+        background-color: var(--bg-secondary);
+        color: var(--text-primary);
+    }
+    
+    /* Select dropdown when focused or expanded */
+    select:focus {
+        background-color: var(--input-bg) !important;
+        color: var(--input-text) !important;
+        outline: 2px solid var(--accent-color) !important;
+    }
+    
+    /* Dropdown option hover - ensure text is visible */
+    option:hover,
+    option:checked {
+        background-color: var(--accent-color) !important;
+        color: white !important;
+    }
+    
+    /* Selected option text in select box */
+    select option:checked:not(:hover) {
+        background: linear-gradient(to right, var(--accent-color), var(--accent-color));
+        color: white;
+    }
+    
     /* Buttons */
     [data-testid="stButton"] > button {
         background-color: var(--accent-color);
@@ -198,6 +224,14 @@ st.markdown("""
         border-radius: 8px !important;
         border: 1px solid var(--card-border) !important;
         color: var(--text-primary) !important;
+        padding: 12px !important;
+        transition: background-color 0.2s ease;
+    }
+    
+    /* Expander header HOVER state - maintain readability */
+    .streamlit-expanderHeader:hover {
+        background-color: var(--hover-bg) !important;
+        border-color: var(--text-secondary) !important;
     }
     
     /* Expander header text and icon */
@@ -207,8 +241,32 @@ st.markdown("""
         color: var(--text-primary) !important;
     }
     
+    /* Expander header text on hover must stay visible */
+    .streamlit-expanderHeader:hover p,
+    .streamlit-expanderHeader:hover span,
+    .streamlit-expanderHeader:hover div {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Expander header icons */
+    [data-testid="stExpander"] svg {
+        fill: var(--text-primary) !important;
+        stroke: var(--text-primary) !important;
+    }
+    
+    [data-testid="stExpander"]:hover svg {
+        fill: var(--text-primary) !important;
+        stroke: var(--text-primary) !important;
+    }
+    
     /* Expander content */
     [data-testid="stExpander"] [data-testid="stMarkdownContainer"] {
+        color: var(--text-primary) !important;
+        background-color: transparent !important;
+    }
+    
+    [data-testid="stExpander"] [data-testid="stMarkdownContainer"] p,
+    [data-testid="stExpander"] [data-testid="stMarkdownContainer"] span {
         color: var(--text-primary) !important;
     }
     
