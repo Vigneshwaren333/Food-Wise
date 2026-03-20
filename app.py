@@ -31,12 +31,15 @@ st.markdown("""
         --bg-primary: #FFFFFF;
         --bg-secondary: #F0F2F6;
         --text-primary: #262730;
-        --text-secondary: #8B8D91;
+        --text-secondary: #555555;
         --border-color: #ECECEC;
         --card-border: #E0E0E0;
         --hover-bg: #F8F9FA;
         --accent-color: #10A981;
-        --text-muted: #666666;
+        --text-muted: #888888;
+        --input-bg: #FFFFFF;
+        --input-text: #262730;
+        --placeholder-text: #999999;
     }
     
     /* Dark mode variables */
@@ -45,12 +48,15 @@ st.markdown("""
             --bg-primary: #0E1117;
             --bg-secondary: #161B22;
             --text-primary: #E6EDF3;
-            --text-secondary: #C9D1D9;
+            --text-secondary: #D0D4D9;
             --border-color: #30363D;
             --card-border: #444C56;
             --hover-bg: #161B22;
             --accent-color: #10A981;
             --text-muted: #B1BCC7;
+            --input-bg: #0D1117;
+            --input-text: #E6EDF3;
+            --placeholder-text: #8B949E;
         }
     }
     
@@ -95,6 +101,7 @@ st.markdown("""
         padding: 16px;
         border-radius: 10px;
         border: 1px solid var(--card-border);
+        color: var(--text-primary);
     }
     
     .metric-card {
@@ -103,6 +110,7 @@ st.markdown("""
         border-radius: 10px;
         text-align: center;
         border: 1px solid var(--card-border);
+        color: var(--text-primary);
     }
     
     /* Main content text elements */
@@ -136,14 +144,31 @@ st.markdown("""
         margin-bottom: 8px;
     }
     
-    /* Input elements */
+    /* Input elements - improved styling */
     [data-testid="stTextInput"] input,
     [data-testid="stSelectbox"] select,
     [data-testid="stNumberInput"] input {
-        background-color: var(--bg-secondary) !important;
-        color: var(--text-primary) !important;
+        background-color: var(--input-bg) !important;
+        color: var(--input-text) !important;
         border: 1px solid var(--card-border) !important;
         border-radius: 6px !important;
+    }
+    
+    /* Placeholder text styling */
+    [data-testid="stTextInput"] input::placeholder,
+    [data-testid="stSelectbox"] select::placeholder,
+    [data-testid="stNumberInput"] input::placeholder,
+    input::placeholder,
+    textarea::placeholder {
+        color: var(--placeholder-text) !important;
+        opacity: 1 !important;
+    }
+    
+    /* Firefox specific placeholder styling */
+    input::-moz-placeholder,
+    textarea::-moz-placeholder {
+        color: var(--placeholder-text) !important;
+        opacity: 1 !important;
     }
     
     /* Buttons */
@@ -160,17 +185,30 @@ st.markdown("""
         opacity: 0.9;
     }
     
-    /* Expanders */
+    /* Expanders - ensure proper contrast */
     [data-testid="stExpander"] {
         background-color: var(--bg-secondary);
         border: 1px solid var(--card-border);
         border-radius: 8px;
+        color: var(--text-primary);
     }
     
     .streamlit-expanderHeader {
         background-color: var(--bg-secondary) !important;
         border-radius: 8px !important;
         border: 1px solid var(--card-border) !important;
+        color: var(--text-primary) !important;
+    }
+    
+    /* Expander header text and icon */
+    .streamlit-expanderHeader p,
+    .streamlit-expanderHeader span,
+    .streamlit-expanderHeader div {
+        color: var(--text-primary) !important;
+    }
+    
+    /* Expander content */
+    [data-testid="stExpander"] [data-testid="stMarkdownContainer"] {
         color: var(--text-primary) !important;
     }
     
@@ -228,6 +266,7 @@ st.markdown("""
     
     td {
         border-color: var(--card-border);
+        color: var(--text-primary);
     }
     
     /* Captions and muted text */
