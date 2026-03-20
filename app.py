@@ -157,20 +157,81 @@ st.markdown("""
         opacity: 1 !important;
     }
     
-    /* Dropdown options - HIGH CONTRAST */
-    option {
-        background-color: var(--bg-secondary) !important;
-        color: var(--text-primary) !important;
+    /* Dropdown/Select box - CRITICAL FIX */
+    select {
+        background-color: #FFFFFF !important;
+        color: #1a1a1a !important;
+        border: 1px solid var(--card-border) !important;
+        border-radius: 6px !important;
+        padding: 8px !important;
     }
     
+    /* Dark mode select */
+    @media (prefers-color-scheme: dark) {
+        select {
+            background-color: #0D1117 !important;
+            color: #E6EDF3 !important;
+        }
+    }
+    
+    /* Dropdown options - EXPLICIT DARK TEXT ON LIGHT BACKGROUND */
+    option {
+        background-color: #FFFFFF !important;
+        color: #1a1a1a !important;
+        padding: 8px !important;
+    }
+    
+    /* Dark mode options */
+    @media (prefers-color-scheme: dark) {
+        option {
+            background-color: #1C2128 !important;
+            color: #E6EDF3 !important;
+        }
+    }
+    
+    /* Option hover/focus - GREEN WITH WHITE TEXT */
     option:hover {
         background-color: var(--accent-color) !important;
         color: white !important;
     }
     
+    /* Option checked - GREEN WITH WHITE TEXT */
     option:checked {
         background-color: var(--accent-color) !important;
         color: white !important;
+    }
+    
+    /* Selectbox focus */
+    select:focus {
+        outline: 2px solid var(--accent-color) !important;
+        outline-offset: 1px !important;
+    }
+    
+    /* Streamlit Selectbox styling */
+    [data-testid="stSelectbox"] {
+        color: #1a1a1a !important;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        [data-testid="stSelectbox"] {
+            color: #E6EDF3 !important;
+        }
+    }
+    
+    [data-testid="stSelectbox"] select,
+    [data-testid="stSelectbox"] [role="listbox"],
+    [data-testid="stSelectbox"] [role="option"] {
+        background-color: #FFFFFF !important;
+        color: #1a1a1a !important;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        [data-testid="stSelectbox"] select,
+        [data-testid="stSelectbox"] [role="listbox"],
+        [data-testid="stSelectbox"] [role="option"] {
+            background-color: #0D1117 !important;
+            color: #E6EDF3 !important;
+        }
     }
     
     /* Buttons */
